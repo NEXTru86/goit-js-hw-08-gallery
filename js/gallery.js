@@ -31,6 +31,7 @@ const createImegeItem = item => {
 
 const createGallery = items.map(item => createImegeItem(item));
 refs.gallery.append(...createGallery);
+console.dir(createGallery);
 
 refs.gallery.addEventListener('click', onGalleryClick);
 
@@ -46,11 +47,12 @@ function onGalleryClick(event) {
     refs.background.classList.add('is-open');
     refs.backgroundImg.src = imageRef.dataset.source;
     refs.backgroundImg.alt = imageRef.alt;
+    window.addEventListener('keydown', onCloseLightBox);
 };
 
 refs.closeLightBoxBtn.addEventListener('click', onCloseLightBox);
 refs.lightBoxOverlay.addEventListener('click', onCloseLightBox);
-window.addEventListener('keydown', onCloseLightBox);
+
 
 function onCloseLightBox(event) {
     refs.background.classList.remove('is-open');
@@ -59,6 +61,7 @@ function onCloseLightBox(event) {
 
     if (event.code === 'Escape') {
         refs.background.classList.remove('is-open');
+        window.removeEventListener('keydown', onCloseLightBox);
         refs.backgroundImg.src = '';
         refs.backgroundImg.alt = '';
     };
